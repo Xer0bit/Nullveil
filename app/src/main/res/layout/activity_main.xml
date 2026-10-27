@@ -340,7 +340,7 @@
                 android:id="@+id/devOptions"
                 style="@style/Mono"
                 android:layout_marginTop="16dp"
-                android:text="ghost mode access: see SETUP   [open]"
+                android:text=""
                 android:textColor="@color/acid" />
         </LinearLayout>
     </LinearLayout>

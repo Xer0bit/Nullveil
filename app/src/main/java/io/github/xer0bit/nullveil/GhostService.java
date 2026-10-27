@@ -6,6 +6,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ServiceInfo;
 import android.location.Location;
@@ -52,9 +53,17 @@ public class GhostService extends Service {
                 }
                 error = "";
             } catch (SecurityException e) {
-                error = "Ghost mode is locked. Open SETUP > Ghost mode access.";
-                stop();
+                // Android took the unlock away (for example Developer options were changed). Stay on, say why,
+                // and resume by itself once it is unlocked again, instead of quietly stopping.
+                error = "Ghost access was lost: Android reset the unlock. Unlock it again in SETUP; Ghost resumes by itself.";
+                h.postDelayed(this, 2000);
                 return;
+            } catch (IllegalArgumentException e) {
+                try {
+                    addProviders(); // Android removed our providers: register them again
+                } catch (RuntimeException ignored) {
+                    // still not allowed: next round tries again
+                }
             } catch (RuntimeException e) {
                 error = "Could not set location: " + e.getClass().getSimpleName();
             }
@@ -64,6 +73,18 @@ public class GhostService extends Service {
 
     // Criteria.POWER_LOW/ACCURACY_FINE == ProviderProperties.POWER_USAGE_LOW/ACCURACY_FINE (both 1); the new class needs API 31.
     @SuppressLint("WrongConstant")
+    private void addProviders() {
+        for (String p : PROVIDERS) {
+            try {
+                lm.removeTestProvider(p);
+            } catch (IllegalArgumentException ignored) {
+                // none registered yet
+            }
+            lm.addTestProvider(p, false, false, false, false, true, true, true, Criteria.POWER_LOW, Criteria.ACCURACY_FINE);
+            lm.setTestProviderEnabled(p, true);
+        }
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null || ACTION_STOP.equals(intent.getAction())) {
@@ -75,15 +96,7 @@ public class GhostService extends Service {
         foreground();
         lm = getSystemService(LocationManager.class);
         try {
-            for (String p : PROVIDERS) {
-                try {
-                    lm.removeTestProvider(p);
-                } catch (IllegalArgumentException ignored) {
-                    // none registered yet
-                }
-                lm.addTestProvider(p, false, false, false, false, true, true, true, Criteria.POWER_LOW, Criteria.ACCURACY_FINE);
-                lm.setTestProviderEnabled(p, true);
-            }
+            addProviders();
         } catch (SecurityException e) {
             error = "Ghost mode is locked. Open SETUP > Ghost mode access.";
             stop();
@@ -105,6 +118,18 @@ public class GhostService extends Service {
                 .build();
         if (Build.VERSION.SDK_INT >= 34) startForeground(2, n, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE);
         else startForeground(2, n);
+    }
+
+    /** Removes leftover test providers (a frozen fake position) when Ghost is off, e.g. after Android took the unlock away mid-run. */
+    static void cleanup(Context c) {
+        LocationManager manager = c.getSystemService(LocationManager.class);
+        for (String p : PROVIDERS) {
+            try {
+                manager.removeTestProvider(p);
+            } catch (RuntimeException ignored) {
+                // nothing registered, or not allowed right now
+            }
+        }
     }
 
     private void stop() {

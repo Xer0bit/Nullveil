@@ -210,13 +210,17 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(android.widget.AdapterView<?> p) {}
         });
         b.ghost.setOnClickListener(v -> toggleGhost());
-        b.devOptions.setOnClickListener(v -> tab(4));
+        b.devOptions.setOnClickListener(v -> {
+            if (!mockLocationApp()) ghostHelp();
+            else tab(4);
+        });
         tab(getIntent().getIntExtra("tab", 0));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (!GhostService.running && mockLocationApp()) GhostService.cleanup(this);
         ui.post(tick);
     }
 
@@ -261,7 +265,8 @@ public class MainActivity extends AppCompatActivity {
                 .setTitle("Unlock Ghost mode (one time)")
                 .setMessage("Android lets an app show other apps a different position only after you allow it once. "
                         + "No app can skip this without root; it is an Android security rule.\n\n"
-                        + "A) On the phone: Developer options > Select mock location app > Nullveil.\n\n"
+                        + "A) On the phone: Developer options > Select mock location app > Nullveil.\n"
+                        + "Do NOT choose \"No application\" and do not switch Developer options off: that locks Ghost mode again.\n\n"
                         + "B) From a computer with USB debugging:\n" + cmd + "\n\nIt stays on afterwards.")
                 .setNeutralButton("OPEN DEVELOPER OPTIONS", (d, w) -> {
                     try {
@@ -437,6 +442,9 @@ public class MainActivity extends AppCompatActivity {
             appsAdapter.notifyDataSetChanged();
         }
 
+        boolean ghostReady = mockLocationApp();
+        b.devOptions.setText(ghostReady ? "ghost mode access: READY" : "ghost mode access: LOCKED   [tap to unlock]");
+        b.devOptions.setTextColor(getColor(ghostReady ? R.color.acid : R.color.alarm));
         b.ghost.setBackgroundResource(GhostService.running ? R.drawable.pill_on : R.drawable.pill_off);
         b.ghost.setText(GhostService.running ? "GHOST  ON" : "GHOST  OFF");
         b.ghost.setTextColor(getColor(GhostService.running ? R.color.acid : R.color.fg));
