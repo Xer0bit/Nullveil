@@ -1,0 +1,16 @@
+
+*.apk
+app/src/main/jniLibs/
+build/
+.claude/
+.env*
+.gradle/
+.idea/
+*.iml
+*.jks
+*.keystore
+keystore.properties
+# local / private
+local.properties
+release/
+rust/target/

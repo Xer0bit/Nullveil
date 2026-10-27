@@ -1,0 +1,69 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Release signing: the key lives OUTSIDE the repo (default ~/.nullveil/keystore.properties, or $NULLVEIL_KEYSTORE_PROPERTIES).
+// Without it the release APK is simply left unsigned, which is what contributors and CI get.
+def keystoreProps = new Properties()
+def keystoreFile = file(System.getenv('NULLVEIL_KEYSTORE_PROPERTIES') ?: "${System.getProperty('user.home')}/.nullveil/keystore.properties")
+if (keystoreFile.exists()) keystoreFile.withInputStream { keystoreProps.load(it) }
+
+android {
+    namespace 'io.github.xer0bit.nullveil'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'io.github.xer0bit.nullveil'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '0.1.0'
+    }
+
+    signingConfigs {
+        release {
+            if (keystoreProps['storeFile']) {
+                storeFile file(keystoreProps['storeFile'])
+                storePassword keystoreProps['storePassword']
+                keyAlias keystoreProps['keyAlias']
+                keyPassword keystoreProps['keyPassword']
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig keystoreProps['storeFile'] ? signingConfigs.release : null
+            minifyEnabled true  // also strips Log.* via proguard-rules.pro
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures { viewBinding true }
+
+    lint {
+        abortOnError true
+        warningsAsErrors false
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+// Build the Rust core for all Android ABIs into src/main/jniLibs before every build.
+tasks.register('cargoNdk', Exec) {
+    workingDir "$rootDir/rust"
+    commandLine 'cargo', 'ndk',
+        '-t', 'arm64-v8a', '-t', 'armeabi-v7a', '-t', 'x86_64', '-t', 'x86',
+        '-o', "$projectDir/src/main/jniLibs", 'build', '--release'
+    environment 'ANDROID_NDK_HOME', "${android.sdkDirectory}/ndk/27.2.12479018"
+}
+tasks.matching { it.name == 'preBuild' }.configureEach { dependsOn 'cargoNdk' }

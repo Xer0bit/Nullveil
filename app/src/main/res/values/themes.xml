@@ -1,0 +1,55 @@
+<resources>
+    <style name="Theme.Privacy" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/acid</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:navigationBarColor">@color/bg</item>
+    </style>
+
+    <style name="Mono">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textColor">@color/dim</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="Tab" parent="Mono">
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:letterSpacing">0.08</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Field" parent="Mono">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:inputType">numberSigned|numberDecimal</item>
+        <item name="android:textColor">@color/fg</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Chip" parent="Mono">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/card</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">14dp</item>
+    </style>
+
+    <style name="Pill" parent="Mono">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/card</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Filter" parent="Mono">
+        <item name="android:background">@drawable/card</item>
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+</resources>

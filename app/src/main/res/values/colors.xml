@@ -1,0 +1,8 @@
+<resources>
+    <color name="bg">#0A0A0C</color>
+    <color name="fg">#E8E8E3</color>
+    <color name="dim">#6B6B73</color>
+    <color name="acid">#C6FF3D</color>
+    <color name="alarm">#FF4D4D</color>
+    <color name="card">#131318</color>
+</resources>

@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_mark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.3"
+                android:text="NULLVEIL"
+                android:textColor="@color/fg"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tabShield"
+                style="@style/Tab"
+                android:text="SHIELD" />
+
+            <TextView
+                android:id="@+id/tabWatch"
+                style="@style/Tab"
+                android:text="WATCH" />
+
+            <TextView
+                android:id="@+id/tabApps"
+                style="@style/Tab"
+                android:text="APPS" />
+
+            <TextView
+                android:id="@+id/tabGhost"
+                style="@style/Tab"
+                android:text="GHOST" />
+
+            <TextView
+                android:id="@+id/tabSetup"
+                style="@style/Tab"
+                android:text="SETUP" />
+        </LinearLayout>
+
+        <!-- SHIELD -->
+        <LinearLayout
+            android:id="@+id/panelShield"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ring"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ring_off"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:letterSpacing="0.3"
+                android:text="START"
+                android:textColor="@color/fg"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="14dp"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.4"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sunk"
+                    style="@style/Chip"
+                    android:layout_marginEnd="4dp" />
+
+                <TextView
+                    android:id="@+id/passed"
+                    style="@style/Chip"
+                    android:layout_marginStart="4dp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/mic"
+                style="@style/Pill"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/guard"
+                style="@style/Pill"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/dot"
+                style="@style/Pill"
+                android:layout_marginTop="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/strict"
+                    style="@style/Pill"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/rules"
+                    style="@style/Pill"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/setupHint"
+                style="@style/Pill"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/alarm"
+                android:visibility="gone" />
+
+            <ListView
+                android:id="@+id/shieldList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="8dp"
+                android:scrollbars="none" />
+        </LinearLayout>
+
+        <!-- WATCH -->
+        <LinearLayout
+            android:id="@+id/panelWatch"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/Mono"
+                android:layout_marginTop="14dp"
+                android:text="LOCK = the app gets no lookups while you are not using it. TRUST = never blocked." />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/fAll"
+                    style="@style/Filter"
+                    android:text="ALL" />
+
+                <TextView
+                    android:id="@+id/fBlocked"
+                    style="@style/Filter"
+                    android:text="BLOCKED" />
+
+                <TextView
+                    android:id="@+id/fSusp"
+                    style="@style/Filter"
+                    android:text="SUSPICIOUS" />
+
+                <TextView
+                    android:id="@+id/fClear"
+                    style="@style/Filter"
+                    android:text="CLEAR" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/watchList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="8dp"
+                android:scrollbars="none" />
+        </LinearLayout>
+
+        <!-- APPS -->
+        <LinearLayout
+            android:id="@+id/panelApps"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/Mono"
+                android:layout_marginTop="14dp"
+                android:text="apps Nullveil caught, then apps that can use your mic, camera or location. Tap one for its page." />
+
+            <ListView
+                android:id="@+id/appsList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="8dp"
+                android:scrollbars="none" />
+        </LinearLayout>
+
+        <!-- SETUP -->
+        <LinearLayout
+            android:id="@+id/panelSetup"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/Mono"
+                android:layout_marginTop="14dp"
+                android:text="everything Nullveil needs, one tap each. Red = missing." />
+
+            <ListView
+                android:id="@+id/setupList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="8dp"
+                android:scrollbars="none" />
+        </LinearLayout>
+
+        <!-- GHOST -->
+        <LinearLayout
+            android:id="@+id/panelGhost"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                style="@style/Mono"
+                android:layout_marginTop="14dp"
+                android:text="ghost mode: show every app a different position." />
+
+            <Spinner
+                android:id="@+id/place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp" />
+
+            <TextView
+                style="@style/Mono"
+                android:layout_marginTop="12dp"
+                android:text="LATITUDE" />
+
+            <EditText
+                android:id="@+id/lat"
+                style="@style/Field"
+                android:hint="latitude"
+                android:text="0.0" />
+
+            <TextView
+                style="@style/Mono"
+                android:layout_marginTop="12dp"
+                android:text="LONGITUDE" />
+
+            <EditText
+                android:id="@+id/lon"
+                style="@style/Field"
+                android:hint="longitude"
+                android:text="0.0" />
+
+            <TextView
+                android:id="@+id/ghost"
+                style="@style/Pill"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/pill_off"
+                android:gravity="center"
+                android:letterSpacing="0.3"
+                android:padding="16dp"
+                android:textColor="@color/fg"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/ghostStatus"
+                style="@style/Mono"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/alarm" />
+
+            <TextView
+                android:id="@+id/devOptions"
+                style="@style/Mono"
+                android:layout_marginTop="16dp"
+                android:text="ghost mode access: see SETUP   [open]"
+                android:textColor="@color/acid" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>
