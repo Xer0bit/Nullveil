@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" width="256" height="256" role="img" aria-label="Nullveil logo: a ring with a slash through it">
+  <rect width="108" height="108" rx="24" fill="#0A0A0C"/>
+  <circle cx="54" cy="54" r="27" fill="none" stroke="#C6FF3D" stroke-opacity="0.25" stroke-width="2"/>
+  <circle cx="54" cy="54" r="20" fill="none" stroke="#C6FF3D" stroke-width="5"/>
+  <path d="M37 71L71 37" fill="none" stroke="#C6FF3D" stroke-width="5" stroke-linecap="round"/>
+</svg>

@@ -1,4 +1,8 @@
-# Nullveil
+<p align="center">
+  <img src="assets/logo.svg" width="160" alt="Nullveil logo: a ring with a slash through it">
+</p>
+
+<h1 align="center">Nullveil</h1>
 
 **Take your phone back from Big Tech trackers. Your device, your choices.**
 
