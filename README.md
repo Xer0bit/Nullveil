@@ -36,8 +36,8 @@ Honesty matters more than marketing:
 - **Mic Guard** shows Android's mic indicator with Nullveil as the user, needs the mic permission for
   Nullveil itself, cannot start by itself after a reboot, and relies on Android's concurrent-capture
   rules ([docs](https://developer.android.com/media/platform/sharing-audio-input)). Audio is read only
-  to keep hold of the mic and is dropped immediately: never stored, never sent. It is **not yet
-  verified on many phones**.
+  to keep hold of the mic and is dropped immediately: never stored, never sent. Verified so far on
+  **one phone** (Xiaomi HyperOS 3, Android 16: a WhatsApp voice note recorded as complete silence); not yet on many.
 - **Ghost mode needs a one-time unlock that no app can skip without root.** Android only lets an app show
   other apps a different position after you pick it as the "mock location app" (Developer options), or after
   Android's shell grants it (`adb shell appops set io.github.xer0bit.nullveil android:mock_location allow`).
