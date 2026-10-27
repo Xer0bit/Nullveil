@@ -38,9 +38,10 @@ Honesty matters more than marketing:
   rules ([docs](https://developer.android.com/media/platform/sharing-audio-input)). Audio is read only
   to keep hold of the mic and is dropped immediately: never stored, never sent. It is **not yet
   verified on many phones**.
-- **Ghost mode needs a one-time unlock** that only Android's shell can give
-  (`adb shell appops set io.github.xer0bit.nullveil android:mock_location allow`). Nullveil can't
-  do it by itself without root.
+- **Ghost mode needs a one-time unlock that no app can skip without root.** Android only lets an app show
+  other apps a different position after you pick it as the "mock location app" (Developer options), or after
+  Android's shell grants it (`adb shell appops set io.github.xer0bit.nullveil android:mock_location allow`).
+  This is an Android security rule, the same for every GPS-spoofing app. The Setup tab explains both ways.
 - **No root features.** No fake camera feed, no sensor spoofing, no per-app permission revoking.
 
 ## Privacy model

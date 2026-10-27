@@ -251,13 +251,26 @@ public class MainActivity extends AppCompatActivity {
         else startService(new Intent(this, VeilService.class));
     }
 
-    /** Ghost mode needs one app-op that only Android's shell can grant. Explain it here, do not send the user to system settings. */
+    /**
+     * Ghost mode needs one Android app-op that no normal app can grant itself: either you pick Nullveil as the
+     * "mock location app" in Developer options, or Android's shell grants it. There is no third way without root.
+     */
     private void ghostHelp() {
         String cmd = "adb shell appops set " + getPackageName() + " android:mock_location allow";
         new AlertDialog.Builder(this)
-                .setTitle("Unlock Ghost mode")
-                .setMessage("Android lets only its own shell switch this on, once. From a computer with USB debugging, run:\n\n" + cmd
-                        + "\n\nNullveil cannot do this by itself without root. Once unlocked it stays on.")
+                .setTitle("Unlock Ghost mode (one time)")
+                .setMessage("Android lets an app show other apps a different position only after you allow it once. "
+                        + "No app can skip this without root; it is an Android security rule.\n\n"
+                        + "A) On the phone: Developer options > Select mock location app > Nullveil.\n\n"
+                        + "B) From a computer with USB debugging:\n" + cmd + "\n\nIt stays on afterwards.")
+                .setNeutralButton("OPEN DEVELOPER OPTIONS", (d, w) -> {
+                    try {
+                        startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS));
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(this, "Turn on Developer options: tap Build number 7 times", Toast.LENGTH_LONG).show();
+                        open(new Intent(android.provider.Settings.ACTION_DEVICE_INFO_SETTINGS));
+                    }
+                })
                 .setPositiveButton("COPY COMMAND", (d, w) -> {
                     getSystemService(android.content.ClipboardManager.class).setPrimaryClip(android.content.ClipData.newPlainText("command", cmd));
                     Toast.makeText(this, "Copied", Toast.LENGTH_SHORT).show();
